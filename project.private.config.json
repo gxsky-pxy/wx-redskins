@@ -1,0 +1,30 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/postData/postData",
+          "pathName": "pages/postData/postData",
+          "query": "id=9&title=缴纳社保",
+          "scene": null
+        },
+        {
+          "name": "pages/orderList/orderlist",
+          "pathName": "pages/orderList/orderlist",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

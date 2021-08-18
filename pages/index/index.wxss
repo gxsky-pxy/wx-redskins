@@ -1,0 +1,55 @@
+/**index.wxss**/
+.contain{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.swiper-view{
+  width: -webkit-fill-available;
+  height: 170px;
+  margin: 16px;
+  border-radius: 16px;
+  background-color:#f2f3f5;
+}
+.swiper{
+  width: 100%;
+  height: 100%;
+  border-radius:16px;
+  transform: translateY(0);
+  overflow:hidden;
+  background-color:#f2f3f5;
+}
+.swiper-item{
+  height: 100%;
+  width: 100%;
+  border-radius: 16px;
+  background-color:silver;
+}
+.square{
+  background: #F7F8FB;
+  border-radius: 12px;
+  width:100%;
+  padding:12px;
+}
+.square-text{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: -webkit-fill-available;
+  display: block;
+  font-size: 14px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #62677D;
+  line-height: 20px;
+}
+.img-content{
+  width: 100%;
+  text-align: right;
+}
+.img{
+  width: 48px;
+  height: 48px;
+}

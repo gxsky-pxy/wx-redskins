@@ -1,0 +1,17 @@
+<!--logs.wxml-->
+<view class="contain">
+    <view class="userAvatar">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="userName">
+      <open-data type="userNickName" lang="zh_CN"></open-data>
+    </view>
+  <van-cell-group class="log-list">
+    <van-cell title="我的订单" title-style="padding-left:16px;" is-link url="../orderList/orderlist" >
+      <image class="cells-icon" slot="icon" src="/assets/icons/order@2x.png" />
+    </van-cell>
+    <van-cell title="客服咨询" is-link title-style="padding-left:16px;">
+      <image slot="icon" class="cells-icon" src="/assets/icons/customerservice@2x.png" />
+    </van-cell>
+  </van-cell-group>
+</view>

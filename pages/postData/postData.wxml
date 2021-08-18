@@ -1,0 +1,63 @@
+<!--pages/postData/postData.wxml-->
+<wxs src="./index.wxs" module="computed" />
+<scroll-view scroll-y="true" class="container">
+  <view wx:if="{{!paySuccess}}">
+    <view class="tips">请您提交个人信息并完成费用支付，工作人员收到后会联系您，并为您办理对应的服务。</view>
+    <view wx:for="{{form}}" wx:key="fieldId">
+      <view class="title">
+        <text style="color:red;padding-right:4px;">*</text><text>{{item.fieldName}}</text>
+      </view>
+      <view class="input {{currentInput == item.fieldId?'border':''}} {{errorArr[index] && errorArr[index]!==null?'err_border':''}}" wx:if="{{item.fieldType!== 2}}">
+        <input placeholder="请输入" bindfocus="bindFocus" bindblur="bindBlur" style="width:100%"
+          type="{{item.fieldType == 3?'idcard':item.fieldType == 5?'number':item.fieldType == 4?'number':'text'}}"
+          bindinput="bindInput" data-id="{{item.fieldId}}"  />
+      </view>
+      <!-- <van-field
+    wx:if="{{item.fieldType!== 2}}"
+    label="{{item.fieldName}}"
+    placeholder="请输入"
+    type="{{item.fieldType == 3?'idcard':item.fieldType == 5?'number':item.fieldType == 4?'number':'text'}}"
+    error-message="{{computed.checkError(item.fieldType,errorArr)}}"
+    bindinput="bindInput" data-id= "{{item.fieldId}}"
+    required
+  /> -->
+
+      <picker mode="date" value="{{currentDate}}" start="2020-09-01" bindchange="bindDateChange"
+        data-id="{{ item.fieldId }}" wx:else>
+        <view class="input {{errorArr[index] && errorArr[index]!==null?'err_border':''}}">
+          <input placeholder="请输入" readonly data-id="{{item.fieldId}}" value="{{item.fieldValue}}" disabled="true" />
+        </view>
+
+        <!-- <van-field readonly label="{{item.fieldName}}" placeholder="请输入" required
+          error-message="{{computed.checkError(item.fieldType,errorArr)}}" value="{{item.fieldValue}}" /> -->
+      </picker>
+      <view style="display:block;height: 18px;font-size:13px;color:red;padding:4px;">{{(errorArr[index] && errorArr[index]!==null) ?errorArr[index]:''}}</view>
+    </view>
+  </view>
+
+  <van-empty wx:if="{{paySuccess}}" image="/assets/img/book.png">
+
+    <view slot="description" >
+      <view style="font-size: 15px;font-weight: 500;color: #404352;line-height: 21px;"> 提交成功，可以在 “我的-我的订单” 中查询进度。工作人员稍后联系您，并为您办理对应服务。</view>
+    </view>
+  </van-empty>
+</scroll-view>
+
+<view class="fixed-bottom">
+  <view class="contact">
+    <text>平台客服咨询</text>
+    <text class="phone"  bindtap="callEveryone" data-phone="{{info.phone}}">{{info.phone}}</text>
+  </view>
+  <view class="before-btn" wx:if="{{!paySuccess}}">
+    <view class="before-btn_price"><text style="font-size:15px;">￥</text> {{info.price||0.00}}</view>
+    <van-button color="linear-gradient(144deg, #404352 0%, #677BC4 100%)" class="btn" block bindtap="postCard"
+      custom-style="box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);border-radius: 12px;width:140px;" size="large">
+      立即下单
+    </van-button>
+  </view>
+  <view class="after-btn" wx:if="{{paySuccess}}">
+    <!-- <van-button color="#FD3131" size="large" plain custom-style="border-radius: 12px;width:140px;">取消办理</van-button> -->
+    <van-button color="#404352" size="large" plain custom-style="border-radius: 12px;width:140px;" bindtap="goIndex">返回首页</van-button>
+  </view>
+
+</view>

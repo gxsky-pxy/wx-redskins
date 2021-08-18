@@ -1,0 +1,48 @@
+<!--pages/orderList/orderlist.wxml-->
+<van-empty description="还没有订单噢" wx:if="{{length == 0 && !loading}}" />
+<recycle-view batch="{{batchSetRecycleData}}" id="recycleId" class="container" style="width: 100%;"  height="{{length>0?height:loading?height:0}}" bindscrolltolower="bindscrolltolower" scroll-y="true"
+lower-threshold="200"  enable-back-to-top="{{true}}" refresherenabled="{{true}}"
+refreshertriggered="{{stopPull}}"
+bindrefresherrefresh="_refresherrefresh">
+  <recycle-item wx:for="{{orderList}}" wx:key="index" class="card">
+    <van-cell-group >
+    <view class="card-content flex">
+      <view class="fs14">订单号：{{item.orderCode}}</view>
+      <view class="tag {{item.status == 0?'blue':item.status == 1?'green':'red'}}">
+        <text class="fs13">{{item.statusName}}</text>
+      </view>
+    </view>
+    <view class="order_title">{{item.serviceName}}</view>
+    <van-cell  use-label-slot >
+      <view slot="title" class="order_time">{{item.activateTime + ' 创建'}}</view>
+      <view slot="label" class="flex fs14">
+        <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.servicePrice}}</text></view>
+        <view class="order_bold" bindtap="callEveryone" data-phone="{{item.phone}}">联系办理人<van-icon name="arrow" /></view>
+      </view>
+    </van-cell>
+  </van-cell-group>
+  </recycle-item>
+  <recycle-item style="{{loading?'display: flex;align-items: center;justify-content: center;padding: 12px;':'display:none'}}">
+    <van-loading  >加载中...</van-loading>
+  </recycle-item>
+</recycle-view>
+
+
+<!-- <view class="container" style="width: 100%;">
+  <van-cell-group class="card" wx:for="{{ orderList }}" wx:key="id">
+    <view class="card-content flex">
+      <view class="fs14">订单号：{{item.orderCode}}</view>
+      <view class="tag {{item.status == 1?'blue':item.status == 1?'green':'red'}}">
+        <text class="fs13">{{item.statusName}}</text>
+      </view>
+    </view>
+    <view class="order_title">{{item.serviceName}}</view>
+    <van-cell  use-label-slot >
+      <view slot="title" class="order_time">{{item.activateTime + ' 创建'}}</view>
+      <view slot="label" class="flex fs14">
+        <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.servicePrice}}</text></view>
+        <view class="order_bold">联系办理人<van-icon name="arrow" /></view>
+      </view>
+    </van-cell>
+  </van-cell-group>
+</view> -->
