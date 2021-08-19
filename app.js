@@ -1,8 +1,22 @@
 // app.js
-
 import { doLogin } from "./api/login"
 App({
   onLaunch() {
+    const accountInfo = wx.getAccountInfoSync();
+    switch (accountInfo.miniProgram.envVersion) {
+      case 'develop':
+        this.globalData.baseUrl = 'http://test.social.gxidt.cn/test-api/'; //开发
+        break;
+      case 'trial':
+        this.globalData.baseUrl = 'http://test.social.gxidt.cn/test-api/';//体验
+        break;
+      case 'release':
+        this.globalData.baseUrl = 'http://test.social.gxidt.cn/test-api/';//正式
+        break;
+      default:
+        this.globalData.baseUrl = 'http://test.social.gxidt.cn/test-api/';
+        break;
+    }
     this.login();
     // 登录
   },
@@ -25,7 +39,7 @@ App({
         },
         fail () {
           // session_key 已经失效，需要重新执行登录流程
-          // doLogin();
+          doLogin();
         }
       })
     })

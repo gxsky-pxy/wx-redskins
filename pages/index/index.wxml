@@ -21,6 +21,5 @@
           </view>
         </view>
         </van-grid-item>
- 
       </van-grid>
 </view>
