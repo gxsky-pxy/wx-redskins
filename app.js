@@ -47,7 +47,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    // baseUrl:'http://192.168.2.15:26088/'
+    // baseUrl:'http://192.168.2.15:18082/'
     baseUrl:'http://test.social.gxidt.cn/test-api/'
   }
 })

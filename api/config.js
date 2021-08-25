@@ -2,6 +2,7 @@
 var Fly = require("../api/wx.umd.min") //wx.js为您下载的源码文件
 var fly = new Fly(); //创建fly实例
 var ht = require("./login")
+
 function getToken() {
   return new Promise((resolve, reject) => {
     wx.getStorage({

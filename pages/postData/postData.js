@@ -1,6 +1,7 @@
 // pages/postData/postData.js
 import fly from "../../api/config"
 import { checkParam } from '../../utils/validate.js'
+
 Page({
 
   /**
@@ -11,9 +12,6 @@ Page({
     currentInput: 0,
     info: {},
     form: [],
-    userName: '',
-    phone: '',
-    idCard: '',
     errorArr: [],
     paySuccess: false
   },
@@ -51,31 +49,27 @@ Page({
   //提交订单
   postCard() {
     if (this.initValidate()) {
-      wx.showLoading({
-        title: '正在提交',
-        mask: true
+      wx.requestSubscribeMessage({
+        tmplIds: ['H4-R3QZTVCWYK3WIz0Negp4It26dakA4DnjphhElzGY','MZoOjXeMI8skcqrNxynB8LdUJvg7MBVqnL7gxBSD2sQ','veOaoLD4xQtALnVMjEysZuIZnehQlYyJtzk6QvR3G90'],
+        fail:(err) => {
+          console.log(err)
+        },
+        success: (res) => {
+          wx.showLoading({
+            title: '正在提交',
+            mask: true
+          });
+          this.createOrder(getApp().globalData.userInfo);
+        }
       });
-      if(getApp().globalData.userInfo){
-        this.createOrder(getApp().globalData.userInfo);
-      }else{
-        wx.getUserProfile({
-          desc: '用于创建订单', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-          fail:() => {
-            wx.hideLoading();
-          },
-          success: (res) => {
-            getApp().globalData.userInfo = res.userInfo;
-            this.createOrder(res.userInfo);
-          }
-        });
-      }
     }
 
   },
+
   //创建订单Actions
-  createOrder(userInfo){
+  createOrder(info){
     this.setData({
-      'info.userName': userInfo.nickName
+      'info.userName': info.nickName
     });
     let obj = {
       serviceId: this.data.info.id,
@@ -84,6 +78,7 @@ Page({
     };
     fly.post('/order/createStarSocialOrder', obj).then(res => {
       res.code && this.setData({ paySuccess: true });
+      console.log(res);
     }).finally(() => {
       wx.hideLoading();
     });
@@ -99,12 +94,33 @@ Page({
     let err = [];
     this.data.form.forEach((item, index) => {
       let rules = { required: true };
-      item.fieldType == 2 && (rules.date = true);
-      item.fieldType == 3 && (rules.idcard = true);
-      item.fieldType == 4 && (rules.tel = true);
-      item.fieldType == 5 && (rules.number = true);
+      switch(item.fieldType){
+        case 2:
+          rules.date = true;
+          break;
+        case 3:
+          rules.idcard = true;
+          break;
+        case 4:
+          rules.number = true;
+          //rules.tel = true;
+          rules.minlength = 5;
+          rules.maxlength = 20;
+          break;
+        case 5:
+          rules.number = true;
+          rules.minlength = 1;
+          rules.maxlength = 20;
+          break;
+        default:
+          rules.minlength = 1;
+          rules.maxlength = 100;
+          break;
+      }
+
       if (!checkParam('fieldValue', rules, item)) {
         err[index] = `请填写正确格式的${item.fieldName}`;
+        rules.minlength && rules.maxlength && (err[index] = `${err[index]},长度(${rules.minlength}-${rules.maxlength})`);
       }
     });
     this.setData({

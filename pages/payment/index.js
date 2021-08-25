@@ -25,6 +25,20 @@ Page({
     },
 
   toBuy(){
+    if(getApp().globalData.userInfo){
+      this.toPostData();
+    }else{
+      wx.getUserProfile({
+        desc: '用于创建订单', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          getApp().globalData.userInfo = res.userInfo;
+          this.toPostData();
+        }
+      });
+    }
+  },
+  //跳转到下单页
+  toPostData(){
     wx.redirectTo({
       url: '../postData/postData?id='+this.data.info.id +'&title='+this.data.info.serviceName
     });

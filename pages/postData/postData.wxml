@@ -12,24 +12,12 @@
           type="{{item.fieldType == 3?'idcard':item.fieldType == 5?'number':item.fieldType == 4?'number':'text'}}"
           bindinput="bindInput" data-id="{{item.fieldId}}"  />
       </view>
-      <!-- <van-field
-    wx:if="{{item.fieldType!== 2}}"
-    label="{{item.fieldName}}"
-    placeholder="请输入"
-    type="{{item.fieldType == 3?'idcard':item.fieldType == 5?'number':item.fieldType == 4?'number':'text'}}"
-    error-message="{{computed.checkError(item.fieldType,errorArr)}}"
-    bindinput="bindInput" data-id= "{{item.fieldId}}"
-    required
-  /> -->
 
       <picker mode="date" value="{{currentDate}}" start="2020-09-01" bindchange="bindDateChange"
         data-id="{{ item.fieldId }}" wx:else>
         <view class="input {{errorArr[index] && errorArr[index]!==null?'err_border':''}}">
           <input placeholder="请输入" readonly data-id="{{item.fieldId}}" value="{{item.fieldValue}}" disabled="true" />
         </view>
-
-        <!-- <van-field readonly label="{{item.fieldName}}" placeholder="请输入" required
-          error-message="{{computed.checkError(item.fieldType,errorArr)}}" value="{{item.fieldValue}}" /> -->
       </picker>
       <view style="display:block;height: 18px;font-size:13px;color:red;padding:4px;">{{(errorArr[index] && errorArr[index]!==null) ?errorArr[index]:''}}</view>
     </view>
@@ -52,7 +40,7 @@
     <view class="before-btn_price"><text style="font-size:15px;">￥</text> {{info.price||0.00}}</view>
     <van-button color="linear-gradient(144deg, #404352 0%, #677BC4 100%)" class="btn" block bindtap="postCard"
       custom-style="box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);border-radius: 12px;width:140px;" size="large">
-      立即下单
+      提交订单
     </van-button>
   </view>
   <view class="after-btn" wx:if="{{paySuccess}}">

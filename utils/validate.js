@@ -34,6 +34,18 @@ const methods = {
   idcard(value) {
     return optional(value) || /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(value)
   },
+    /**
+     * 验证最小长度
+     */
+    minlength(value, param) {
+      return optional(value) || value.length >= param
+  },
+  /**
+   * 验证最大长度
+   */
+  maxlength(value, param) {
+      return optional(value) || value.length <= param
+  },
 }
 // const required = (value, param) =>{
 //   if (!this.depend(param)) {

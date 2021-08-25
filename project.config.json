@@ -44,8 +44,8 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.1",
-  "appid": "wx20a9fb0d7d47e621",
+  "libVersion": "2.19.2",
+  "appid": "wx1c5a11866fd22c30",
   "projectname": "redSkins",
   "debugOptions": {
     "hidedInDevtools": []

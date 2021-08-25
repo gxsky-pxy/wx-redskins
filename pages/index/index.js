@@ -31,18 +31,32 @@ Page({
     });
   },
   onLoad() {
+    this.getData();
+  },
+  //获取首页数据
+  getData(refresh = false){
     wx.showLoading({
       title: '加载中',
       mask:true
     });
+    wx.showNavigationBarLoading(); 
     fly.all([this.getChart(),this.getService()]).then(res => {
       wx.hideLoading();
+      //隐藏导航条加载动画
+      wx.hideNavigationBarLoading();
+      //停止下拉刷新
+      refresh &&  wx.stopPullDownRefresh();
       this.setData({
         background:res[0]||[],
         grids:res[1]||[]
       })
     });
+  },
 
-
-  }
+    /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+      this.getData(true);
+  },
 })

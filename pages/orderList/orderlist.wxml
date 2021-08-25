@@ -16,7 +16,7 @@ bindrefresherrefresh="_refresherrefresh">
     <van-cell  use-label-slot >
       <view slot="title" class="order_time">{{item.activateTime + ' 创建'}}</view>
       <view slot="label" class="flex fs14">
-        <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.servicePrice}}</text></view>
+        <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.orderPrice}}</text></view>
         <view class="order_bold" bindtap="callEveryone" data-phone="{{item.phone}}">联系办理人<van-icon name="arrow" /></view>
       </view>
     </van-cell>
