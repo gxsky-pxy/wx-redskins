@@ -4,13 +4,17 @@
     "pages/logs/logs",
     "pages/payment/index",
     "pages/postData/postData",
-    "pages/orderList/orderlist"
+    "pages/orderList/orderlist",
+    "pages/result/result"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "红人服务中心",
     "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 60000
   },
   "tabBar": {
     "selectedColor": "#525288",

@@ -1,4 +1,5 @@
 <!--pages/orderList/orderlist.wxml-->
+<wxs module="check" src="./index.wxs"></wxs>
 <van-empty description="还没有订单噢" wx:if="{{length == 0 && !loading}}" />
 <recycle-view batch="{{batchSetRecycleData}}" id="recycleId" class="container" style="width: 100%;"  height="{{length>0?height:loading?height:0}}" bindscrolltolower="bindscrolltolower" scroll-y="true"
 lower-threshold="200"  enable-back-to-top="{{true}}" refresherenabled="{{true}}"
@@ -8,16 +9,29 @@ bindrefresherrefresh="_refresherrefresh">
     <van-cell-group >
     <view class="card-content flex">
       <view class="fs14">订单号：{{item.orderCode}}</view>
-      <view class="tag {{item.status == 0?'blue':item.status == 1?'green':'red'}}">
-        <text class="fs13">{{item.statusName}}</text>
+      <view class="tag {{item.payStatus == 0?'yellow':(item.status == 0?'blue':item.status == 1?'green':'red')}}">
+        <text class="fs13">{{item.payStatus == 0?'未支付':item.statusName}}</text>
       </view>
     </view>
     <view class="order_title">{{item.serviceName}}</view>
-    <van-cell  use-label-slot >
+    <van-cell use-label-slot border="{{false}}">
       <view slot="title" class="order_time">{{item.activateTime + ' 创建'}}</view>
-      <view slot="label" class="flex fs14">
-        <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.orderPrice}}</text></view>
-        <view class="order_bold" bindtap="callEveryone" data-phone="{{item.phone}}">联系办理人<van-icon name="arrow" /></view>
+      <view slot="label" class=" fs14">
+        <view class="flex">
+          <view style="color:rgba(98, 103, 125, 1);">订单价格 <text class="order_bold">￥{{item.orderPrice}}</text></view>
+          <view class="order_bold" bindtap="callEveryone" data-phone="{{item.phone}}">联系办理人<van-icon name="arrow" /></view>
+        </view>
+        <!-- <view class="payOverTime" wx:if="{{item.payStatus == 0 || item.payStatus == 2}}">
+          请在 {{item.payOverTime||'24小时'}} 前完成支付
+        </view> -->
+        <view class="payOverTime" style="align-items:center;" wx:if="{{item.payStatus == 0 || item.payStatus == 2}}">
+          <van-count-down time="{{check.checkTime(item.payOverTime)}}" bind:finish="finishDate"  data-item="{{item}}" data-index="{{index}}" />
+          <view class="payOrCancel">
+            <van-button type="warning" size="small" style="margin-right:10px;" bindtap="signOrder" data-item="{{item}}" data-index="{{index}}">立即支付</van-button>
+          <van-button color="#747474" size="small" bindtap="cancelOrder"  data-item="{{item}}" data-index="{{index}}">取消订单</van-button>
+          </view>
+        </view>
+
       </view>
     </van-cell>
   </van-cell-group>

@@ -23,6 +23,12 @@
           "pathName": "pages/orderList/orderlist",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/result/result",
+          "pathName": "pages/result/result",
+          "query": "phone=15107718583&result=error",
+          "scene": null
         }
       ]
     }

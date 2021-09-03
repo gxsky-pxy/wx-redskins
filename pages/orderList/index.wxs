@@ -1,0 +1,8 @@
+function checkTime(time) {
+   var timestamp = getDate().getTime();
+    return time - timestamp;
+}
+
+module.exports = {
+  checkTime: checkTime
+};

@@ -28,9 +28,10 @@ fly.interceptors.request.use(function (request) {
         request.headers["Authorization"] = wx.getStorageSync('token');
         console.log("token请求成功，值为: ", d);
         return request; //只有最终返回request对象时，原来的请求才会继续
+
       }).finally(() => {
         fly.unlock();//解锁后，会继续发起请求队列中的任务，详情见后面文档
-      })
+      });
     } else {
       request.headers["Authorization"] = token;
     }
@@ -40,16 +41,29 @@ fly.interceptors.request.use(function (request) {
 })
 
 fly.interceptors.response.use(
-  (response) => {
+  async (response) => {
     //只将请求结果的data字段返回
     if (response.data.code == 200) {
       return response.data
     } else {
-      wx.showToast({
-        title: response.data.msg,
-        icon: 'error'
-      });
-      return false;
+      var reg = RegExp(/请先登录/);
+      if(response.data.msg.match(reg)){
+        fly.lock()
+        //去登陆 成功之后再unlock
+        const isLoginSuccess = await ht.doLogin()
+        if (isLoginSuccess) {
+          fly.unlock()
+        }
+        //新执行本次由于token过期被服务器拒绝的接口
+        return fly.request(response.request)
+      }else{
+        wx.showToast({
+          title: response.data.msg,
+          icon: 'error'
+        });
+        return false;
+      }
+
     }
 
   },

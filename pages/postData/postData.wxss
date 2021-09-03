@@ -90,14 +90,10 @@
   color: #404352;
   line-height: 21px;
 }
-.after-btn{
-  display:flex;
-  grid-gap:10px;
-}
-.van-empty__image {
-  width: 100px!important;
-  height: 100px!important;
-}
-.van-empty__description {
-  padding: 0 10px!important;
+.error_text{
+  display:block;
+  height: 18px;
+  font-size:13px;
+  color:red;
+  padding:4px;
 }

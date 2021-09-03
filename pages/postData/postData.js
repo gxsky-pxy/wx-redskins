@@ -12,8 +12,7 @@ Page({
     currentInput: 0,
     info: {},
     form: [],
-    errorArr: [],
-    paySuccess: false
+    errorArr: []
   },
 
 
@@ -50,8 +49,8 @@ Page({
   postCard() {
     if (this.initValidate()) {
       wx.requestSubscribeMessage({
-        tmplIds: ['H4-R3QZTVCWYK3WIz0Negp4It26dakA4DnjphhElzGY','MZoOjXeMI8skcqrNxynB8LdUJvg7MBVqnL7gxBSD2sQ','veOaoLD4xQtALnVMjEysZuIZnehQlYyJtzk6QvR3G90'],
-        fail:(err) => {
+        tmplIds: ['H4-R3QZTVCWYK3WIz0Negp4It26dakA4DnjphhElzGY', 'MZoOjXeMI8skcqrNxynB8LdUJvg7MBVqnL7gxBSD2sQ', 'veOaoLD4xQtALnVMjEysZuIZnehQlYyJtzk6QvR3G90'],
+        fail: (err) => {
           console.log(err)
         },
         success: (res) => {
@@ -67,7 +66,7 @@ Page({
   },
 
   //创建订单Actions
-  createOrder(info){
+  createOrder(info) {
     this.setData({
       'info.userName': info.nickName
     });
@@ -76,11 +75,43 @@ Page({
       userName: this.data.info.userName || '佚名',
       starServiceTemplateBOList: this.data.form
     };
-    fly.post('/order/createStarSocialOrder', obj).then(res => {
-      res.code && this.setData({ paySuccess: true });
-      console.log(res);
-    }).finally(() => {
+
+    fly.post('/order/createPrePayStarSocialOrder', Object.assign({
+      encryptedData: getApp().globalData.userInfo.encryptedData,
+      iv: getApp().globalData.userInfo.iv
+    }, obj), { timeout: 60000 }).then(res => {
       wx.hideLoading();
+      if(res && res.code){
+        wx.requestPayment({
+          timeStamp: res.data.timeStamp,
+          nonceStr: res.data.nonceStr,
+          package: `prepay_id=${res.data.prepay_id}`,
+          signType: res.data.signType,
+          paySign: res.data.paySign,
+          success: (res) => {
+            wx.redirectTo({
+              url: '../result/result?phone=' + this.data.info.phone + '&result=success'
+            });
+          },
+          fail: (err) => {
+            console.log('报错了', err);
+            wx.redirectTo({
+              url: '../result/result?phone=' + this.data.info.phone + '&result=fail'
+            });
+          }
+        });
+      }else{
+        wx.showToast({
+          title: '提交订单出错,请稍后重试',
+          icon:'none'
+        });
+      }
+    }).catch(err => {
+      wx.hideLoading();
+      console.log('报错', err);
+      wx.redirectTo({
+        url: '../result/result?phone=' + this.data.info.phone + '&result=error'
+      });
     });
   },
   goIndex() {
@@ -94,7 +125,7 @@ Page({
     let err = [];
     this.data.form.forEach((item, index) => {
       let rules = { required: true };
-      switch(item.fieldType){
+      switch (item.fieldType) {
         case 2:
           rules.date = true;
           break;
@@ -155,21 +186,21 @@ Page({
     }
   },
 
-    //联系
-    callEveryone(e) {
-      let phone = e.currentTarget.dataset.phone;
-      wx.showModal({
-        title: '联系客服',
-        content: `是否要拨打电话 ${phone}`,
-        success (res) {
-          if (res.confirm) {
-            wx.makePhoneCall({
-              phoneNumber: phone
-            });
-          }
+  //联系
+  callEveryone(e) {
+    let phone = e.currentTarget.dataset.phone;
+    wx.showModal({
+      title: '联系客服',
+      content: `是否要拨打电话 ${phone}`,
+      success(res) {
+        if (res.confirm) {
+          wx.makePhoneCall({
+            phoneNumber: phone
+          });
         }
-      })
-    },
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

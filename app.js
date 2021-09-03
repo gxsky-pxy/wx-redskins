@@ -11,7 +11,7 @@ App({
         this.globalData.baseUrl = 'https://test.social.gxidt.cn/test-api/';//体验
         break;
       case 'release':
-        this.globalData.baseUrl = 'http://test.social.gxidt.cn/test-api/';//正式
+        this.globalData.baseUrl = 'https://test.social.gxidt.cn/test-api/';//正式
         break;
       default:
         this.globalData.baseUrl = 'https://test.social.gxidt.cn/test-api/';
@@ -24,6 +24,7 @@ App({
   async login() {
     const check = await this.checkSession();
     if(check){
+      console.log('么西么西')
       // doLogin();
       this.globalData.token = wx.getStorageSync('token');
     }else{

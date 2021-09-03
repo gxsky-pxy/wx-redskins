@@ -3,10 +3,12 @@
   "usingComponents": {
     "van-empty": "@vant/weapp/empty/index",
     "van-icon": "@vant/weapp/icon/index",
+    "van-button": "@vant/weapp/button/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-loading": "@vant/weapp/loading/index",
     "recycle-view": "miniprogram-recycle-view/recycle-view",
-    "recycle-item": "miniprogram-recycle-view/recycle-item"
+    "recycle-item": "miniprogram-recycle-view/recycle-item",
+    "van-count-down": "@vant/weapp/count-down/index"
   }
 }

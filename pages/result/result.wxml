@@ -1,0 +1,20 @@
+<!--pages/result/result.wxml-->
+<view class="container1">
+  <van-empty image="/assets/img/book.png">
+    <view slot="description" >
+      <view class="tips"> 
+      {{status == 'success'?'提交成功，可以在 “我的-我的订单” 中查询进度。工作人员稍后联系您，并为您办理对应服务。':status=='fail'?'订单未支付，稍后请在 “我的-我的订单” 继续支付。':'订单状态异常，稍后在 “我的-我的订单” 中查看结果。'}}
+      </view>
+    </view>
+</van-empty>
+<view class="fixed-bottom">
+  <view class="contact" bindtap="callEveryone" data-phone="{{phone}}">
+    <text>平台客服咨询</text>
+    <text class="phone"  >{{phone}}</text>
+  </view>
+  <view class="after-btn" >
+    <van-button color="#404352" size="large" plain custom-style="border-radius: 12px;width:140px;" bindtap="goIndex">返回首页</van-button>
+  </view>
+
+</view>
+</view>

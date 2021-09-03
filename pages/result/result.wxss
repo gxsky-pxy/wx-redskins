@@ -1,0 +1,45 @@
+/* pages/result/result.wxss */
+.container1{
+  height:100vh;
+}
+.fixed-bottom {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+}
+
+.contact {
+  font-size: 14px;
+  font-weight: 500;
+  color: #404352;
+  line-height: 20px;
+  margin: 6px 0 12px 0;
+}
+
+.phone {
+  color: #1890FF;
+  margin-left: 8px;
+}
+
+.tips{
+  font-size: 15px;
+  font-weight: 500;
+  color: #404352;
+  line-height: 21px;
+}
+
+.after-btn{
+  display:flex;
+  grid-gap:10px;
+}
+.van-empty__image {
+  width: 100px!important;
+  height: 100px!important;
+}
+.van-empty__description {
+  padding: 0 10px!important;
+}

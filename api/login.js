@@ -5,7 +5,6 @@ export async function doLogin() {
 	isLogin = true;
 	const code = await wxLogin();
 	const d = await login(code);
-	console.log(d)
 	wx.setStorageSync('token', d.data.token);
 	isLogin = false
 	return true

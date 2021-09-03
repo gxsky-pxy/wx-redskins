@@ -15,9 +15,9 @@
 </van-cell-group>
 </scroll-view>
 <view class="fixed-bottom">
-  <view class="contact">
+  <view class="contact" bindtap="callEveryone" data-phone="{{info.phone}}">
     <text>平台客服咨询</text>
-    <text class="phone"  bindtap="callEveryone" data-phone="{{info.phone}}">{{info.phone}}</text>
+    <text class="phone">{{info.phone}}</text>
   </view>
   <van-button color="linear-gradient(45deg, #FF4031 0%, #FF9CEB 100%)" class="btn" bindtap="toBuy"
   block custom-style="border-radius:12px;box-shadow: 0px 8px 16px 0px rgba(255, 66, 52, 0.2)">

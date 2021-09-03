@@ -23,7 +23,7 @@
       <view class="square">
         <text class="square-text">{{gridItem.serviceName}}</text>
         <view class="img-content">
-          <image class="img" src="{{gridItem.serviceIcon}}" />
+          <image class="img" src="{{gridItem.serviceIcon}}" lazy-load="{{true}}" />
         </view>
       </view>
     </van-grid-item>

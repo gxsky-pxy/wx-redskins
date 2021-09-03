@@ -55,6 +55,9 @@ page {
 .red {
   background: rgba(254, 111, 84, 0.2)
 }
+.yellow{
+  background: rgba(249, 203, 139, 0.6);
+}
 
 .order_title{
   font-size: 18px;
@@ -73,4 +76,17 @@ page {
 .order_bold{
   color:#242831;
   font-weight:550;
+}
+.payOverTime{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+}
+.payOrCancel{
+  display:flex;
+  justify-content:flex-end;
+  /* margin-top:8px; */
+}
+.van-count-down{
+  font-weight: 550!important;
 }

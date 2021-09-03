@@ -31,7 +31,10 @@ Page({
       wx.getUserProfile({
         desc: '用于创建订单', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (res) => {
-          getApp().globalData.userInfo = res.userInfo;
+          getApp().globalData.userInfo = Object.assign({},res.userInfo,{
+            encryptedData:res.encryptedData,
+            iv:res.iv
+          });
           this.toPostData();
         }
       });
